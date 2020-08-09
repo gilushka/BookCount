@@ -26,6 +26,18 @@ public class Main extends Application {
     private static String fileName = "C:\\Users\\user\\Work\\BookCount\\src\\resources\\history.dat";
 
     public static void main(String[] args) {
+        Runtime.getRuntime().addShutdownHook(new Thread()
+        {
+            @Override
+            public void run()
+            {
+                try {
+                    optimizeLog();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         Application.launch(args);
     }
 
@@ -40,7 +52,7 @@ public class Main extends Application {
         Label valueLabel = new Label("0");
         valueLabel.setMinHeight(200);
         valueLabel.setMinWidth(150);
-        valueLabel.setFont(Font.font(230));
+        valueLabel.setFont(Font.font(200));
         valueLabel.setOpacity(40);
         setStartValueInLabel(valueLabel);
         Image image = new Image(new FileInputStream(imageName));
@@ -139,7 +151,7 @@ public class Main extends Application {
         }
     }
 
-    private void optimizeLog() throws IOException {
+    private static void optimizeLog() throws IOException {
         File file = new File(fileName);
         String date = LocalDate.now().toString();
         List<String> listOfLogs = new ArrayList<>();
